@@ -30,7 +30,7 @@ router.post('/signup', (req, res, next) => {
           knex('person').insert(req.body).returning('*')
             .then(user => {
               delete user[0].password
-              var token = jwt.sign(Object.assign({}, user[0]), process.env.TOKEN_SECRET);
+              var token = jwt.sign(Object.assign({}, user[0].id), process.env.TOKEN_SECRET);
               res.json({data: token})
             })
         } else {
@@ -57,7 +57,7 @@ router.post('/login', function(req, res, next) {
         var match = bcrypt.compareSync(req.body.password, user[0].password)
         if (match) {
           delete user[0].password
-          var token = jwt.sign(Object.assign({}, user[0]), process.env.TOKEN_SECRET);
+          var token = jwt.sign(Object.assign({}, user[0].id), process.env.TOKEN_SECRET);
           res.json({
             data: token
           })
