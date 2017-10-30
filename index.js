@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({
  extended: false
 }))
 app.use('/camps', campsRouter);
-app.use('/users', usersRouter);
+app.use('/user', usersRouter);
 app.use('/', homeRouter);
 
 app.listen(process.env.PORT || 8080);

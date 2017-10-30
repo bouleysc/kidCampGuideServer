@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const cors = require('cors');
+const queries = require('../db/queries');
 const knex = require('../db/knex');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
@@ -15,23 +16,22 @@ function validUser(user) {
   return validFirstName && validLastName && validEmail && validPassword;
 }
 
-// router.post('/signup', (req,res) => {
-//   queries.createUser(req.body).then(user => {
-//     res.send(user)
-//   })
-// })
 router.post('/signup', (req, res, next) => {
   if (validUser(req.body)) {
-    knex('person').where('email', req.body.email)
+    let email = req.body.email;
+    let body = req.body;
+    queries.signup(email)
       .then(user => {
         if (user.length === 0) {
           var hash = bcrypt.hashSync(req.body.password, 8)
           req.body.password = hash
-          knex('person').insert(req.body).returning('*')
+          queries.addUser(body)
             .then(user => {
               delete user[0].password
-              var token = jwt.sign(Object.assign({}, user[0].id), process.env.TOKEN_SECRET);
-              res.json({data: token})
+              const token = jwt.sign(user[0].id, process.env.TOKEN_SECRET);
+              res.json({
+                data: token
+              })
             })
         } else {
           res.json({
@@ -47,17 +47,19 @@ router.post('/signup', (req, res, next) => {
 });
 
 router.post('/login', function(req, res, next) {
-  knex('person').where('email', req.body.email)
+  if (req.body.email !== undefined || req.body.password !== undefined) {
+    let email = req.body.email;
+    queries.login(email)
     .then(user => {
       if (user.length === 0) {
         res.json({
           error: 'Email or password did not match'
         })
       } else {
-        var match = bcrypt.compareSync(req.body.password, user[0].password)
-        if (match) {
+        const match = bcrypt.compareSync(req.body.password, user[0].password)
+        if(match) {
           delete user[0].password
-          var token = jwt.sign(Object.assign({}, user[0].id), process.env.TOKEN_SECRET);
+          const token = jwt.sign(user[0].id, process.env.TOKEN_SECRET);
           res.json({
             data: token
           })
@@ -68,6 +70,19 @@ router.post('/login', function(req, res, next) {
         }
       }
     })
-});
+  } else {
+    res.json({
+      error: 'please enter an email'
+    })
+  }
+})
+
+
+router.get('/book', (req, res) => {
+  knex('person_camp').then(data => {
+    console.log(data);
+    res.json(data)
+  })
+})
 
 module.exports = router;
