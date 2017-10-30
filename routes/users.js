@@ -59,12 +59,9 @@ router.post('/:id/favorites', (req, res, next) => {
 // })
 
 router.delete('/:id/booked', (req, res, next) => {
-  knex('person_camp')
-  .where({
-    person_id: req.body.person_id,
-    camp_id: req.body.camp_id
-  })
-  .del()
+  console.log(req.body);
+  console.log(req.params.id);
+  queries.removeBookedCampByUser(req.params.id, req.body)
   .then(camp => {
     res.json(camp)
   })

@@ -33,15 +33,25 @@ module.exports = {
         {person_id: personId, camp_id: campId}
       ])
   },
-  // removeBookedCampByUser: function(personId,campId) {
-  //   console.log(personId);
-  //   console.log(campId);
+  // removeBookedCampByUser: function(id) {
   //   return knex('person_camp')
-  //     .where({
-  //     person_id: personId,
-  //     camp_id: campId})
+  //     .where('person_camp.id', id)
   //     .del()
   // },
+  // removeBookedCampByUser: function(body) {
+  //   console.log(body);
+    // return knex('person_camp')
+    //   .where({
+    //   person_id: body.person_id,
+    //   camp_id: body.camp_id})
+    //   .del()
+  // },
+  removeBookedCampByUser: function(personId,campId) {
+    return knex('person_camp').where({
+      person_id: personId,
+      camp_id: campId})
+      .del()
+  },
   getFavoriteCampsByUser: function (id) {
     return knex('camp').select('*')
     .innerJoin('favorites', 'camp.id', 'favorites.camp_id')
