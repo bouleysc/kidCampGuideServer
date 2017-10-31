@@ -48,25 +48,20 @@ router.post('/:id/favorites', (req, res, next) => {
   })
 })
 
-// router.delete('/:id/booked', (req, res, next) => {
-//   let personId = req.params.id
-//   let campId = req.body
-//   console.log(campId)
-//   queries.removeBookedCampByUser(personId, campId)
-//   .then(camp => {
-//     res.json(camp)
-//   })
-// })
 
 router.delete('/:id/booked', (req, res, next) => {
-  console.log(req.body);
-  console.log(req.params.id);
-  queries.removeBookedCampByUser(req.params.id, req.body)
+  queries.removeBookedCampByUser(req.params.id, req.body.camp_id)
   .then(camp => {
     res.json(camp)
   })
 })
 
+router.delete('/:id/favorites', (req, res, next) => {
+  queries.removeFavoriteCampByUser(req.params.id, req.body.camp_id)
+  .then(camp => {
+    res.json(camp)
+  })
+})
 // router.delete('/:id', (req,res) => {
 //   queries.getUsersById(req.params.id).then(users => {
 //     res.json(users)

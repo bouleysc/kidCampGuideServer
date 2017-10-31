@@ -33,24 +33,12 @@ module.exports = {
         {person_id: personId, camp_id: campId}
       ])
   },
-  // removeBookedCampByUser: function(id) {
-  //   return knex('person_camp')
-  //     .where('person_camp.id', id)
-  //     .del()
-  // },
-  // removeBookedCampByUser: function(body) {
-  //   console.log(body);
-    // return knex('person_camp')
-    //   .where({
-    //   person_id: body.person_id,
-    //   camp_id: body.camp_id})
-    //   .del()
-  // },
   removeBookedCampByUser: function(personId,campId) {
     return knex('person_camp').where({
       person_id: personId,
-      camp_id: campId})
-      .del()
+      camp_id: campId
+    })
+    .del()
   },
   getFavoriteCampsByUser: function (id) {
     return knex('camp').select('*')
@@ -62,5 +50,12 @@ module.exports = {
     return knex('favorites').insert([
         {person_id: personId, camp_id: campId}
       ])
+  },
+  removeFavoriteCampByUser: function(personId,campId) {
+    return knex('favorites').where({
+      person_id: personId,
+      camp_id: campId
+    })
+    .del()
   }
 }
