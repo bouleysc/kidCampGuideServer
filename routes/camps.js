@@ -14,9 +14,9 @@ router.get('/:id', (req,res) => {
   })
 })
 
-
-router.delete('/:id', (req,res) => {
-  res.send('hello')
-})
+// 
+// router.delete('/:id', (req,res) => {
+//   res.send('hello')
+// })
 
 module.exports = router

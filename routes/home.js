@@ -6,7 +6,6 @@ const knex = require('../db/knex');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 require('dotenv').config();
-// const queries = require('../db/queries');
 
 function validUser(user) {
   let validFirstName = typeof user.first_name === 'string' && user.first_name.trim() !== '' && user.first_name != null;
@@ -75,14 +74,6 @@ router.post('/login', function(req, res, next) {
       error: 'please enter an email'
     })
   }
-})
-
-
-router.get('/book', (req, res) => {
-  knex('person_camp').then(data => {
-    console.log(data);
-    res.json(data)
-  })
 })
 
 module.exports = router;
