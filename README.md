@@ -8,7 +8,7 @@ Back-end for Kid Camp Guide. Stores users and camps and all routes associated wi
 
 ## Technologies
 
-Node, Express, Knex, bCrypt, Git/Github, PostgreSQL, Postman, jQuery
+Node, Express, Knex, bCrypt, Git/Github, PostgreSQL, Postman, jQuery, Heroku
 
 ## Author
 
