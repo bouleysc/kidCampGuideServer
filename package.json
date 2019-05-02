@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^1.0.3",
+    "bcrypt": "^3.0.6",
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "dotenv": "^4.0.0",
@@ -19,7 +19,7 @@
     "heroku-cli": "^7.0.9",
     "jsonwebtoken": "^8.1.0",
     "knex": "^0.15.2",
-    "npm": "^6.4.1",
+    "npm": "^6.9.0",
     "pg": "^7.3.0"
   }
 }
